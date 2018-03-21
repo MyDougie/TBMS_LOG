@@ -36,6 +36,7 @@ class LogResultView(TemplateView):
 def read_file(request):
     fileName = request.POST.getlist('fileArray[]')
     rootPath = 'C:\\' + os.path.join('Users', 'SONY', 'Desktop', 'TBMS_LOG', 'tbms_logs')
+    #test
 
     file_name_list = []
     log_dict_list = []
