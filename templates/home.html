@@ -1,0 +1,33 @@
+
+
+{% extends "base.html" %}
+
+{% block title %}home.html{% endblock %}
+
+{% load staticfiles %}
+{% block extrastyle %}{% static "css/home.css" %}{% endblock %}
+
+{% block content %}
+
+<div id="content_home">
+	<div id="homeimg">
+		<a href="/"><img src="{% static 'img/Desert.jpg' %}" style="height:256px;"/></a>
+		<h4 style="margin: 0;">This is Django powered web site.</h4>
+	</div>
+	
+	<hr style="margin: 5px 0;">
+	
+	<h2>Select Application</h2>
+	
+	
+	
+	
+	
+</div>
+{% endblock content %}
+
+{% block footer %}
+<div id="footer">
+	&copy; tgpark 2018
+</div>
+{% endblock footer %}

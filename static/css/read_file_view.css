@@ -1,0 +1,5 @@
+input[type=file]{
+		border: 2px solid;
+		padding: 12px 20px;
+    	margin: 8px 0;
+	}

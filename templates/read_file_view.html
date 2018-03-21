@@ -1,0 +1,76 @@
+
+{% extends "base.html" %}
+
+{% block title %}read_file_view.html{% endblock %}
+
+{% load staticfiles %}
+
+{% block extrastyle %}{% static "css/read_file_view.css" %}{% endblock %} 
+
+{% block content %}
+<div id="content">
+
+<form id='form' action="/read_file/" method='post'> {% csrf_token %}
+	<input type="file" name="fileSelector" multiple='multiple'>&nbsp;&nbsp;&nbsp;
+	<input type="button" id="readFileBtn" value="로그 분석">
+</form>
+
+<div id="log_result">
+</div>
+
+<script>
+	$(function(){
+		
+		$('#readFileBtn').click(function(){
+			$('#log_result').show();
+		});
+		
+		
+//		$('#readFileBtn').click(function(){
+		$('input[type=file]').change(function(){
+			$('#log_result').hide();
+		
+			var files = $('input[name="fileSelector"]').get(0).files;
+			var fileArray = [];
+	    	for(var i=0; i<files.length; i++){
+	        	fileArray.push(files[i].name);
+	    	}
+	    	
+	    	$.ajax({
+	    	  type: "POST",
+	    	  url: '/read_file/',
+	    	  data: {
+	    		  'fileArray[]' : fileArray,
+	    		  csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+	    	  },
+	    	  success: function(result){
+	    		  console.log(result);
+	    		  plot = result.substring(0,25);
+	    		  chart = result.substring(25);
+	    		  console.log(plot);
+	    		  console.log(chart);
+	    		  $('#log_result').empty();
+	    		  
+	    		  var result_plot = '<iframe width="50%" height="550" frameborder="0" seamless="seamless" scrolling="no" ' +
+	    		  'src="' + plot + '.embed?width=800&height=550"></iframe>';
+	    		  
+	    		  var result_chart = '<iframe width="50%" height="550" frameborder="0" seamless="seamless" scrolling="no" ' +
+	    		  'src="' + chart + '.embed?width=800&height=550"></iframe>';
+	    		  
+	    		  $('#log_result').append(result_plot);
+	    		  $('#log_result').append(result_chart);
+	    		  
+	    	  }, error: function(status, error){
+	    		  console.log(status + " // " + error);
+	    	  }
+	    	  //dataType: dataType
+	    	});
+	    	
+		});
+		
+	});
+
+</script>
+
+</div>
+{% endblock content %}
